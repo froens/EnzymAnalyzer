@@ -1,12 +1,10 @@
 #!/usr/bin/python
-import EnzymFileUtils as enz_file
-from sklearn.feature_selection import SelectKBest, f_classif, chi2
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
 import time
-import Chart
-import EnzymPreprocessing as enz_preprocessing
-import EnzymUtils as enz_utils
+
+from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.preprocessing import MinMaxScaler
+
+from utils import FileUtils as enz_file, PreprocessingUtils as enz_preprocessing, ChartUtils
 
 timestamp = int(time.time())
 
@@ -27,8 +25,7 @@ for i in range(1):
     features_scaled = scaler.fit_transform(features)
     targets = [target_dict[x] for x in measurement_ids]
     targets_scaled = scaler.fit_transform(targets)
-    # HEHEHEHE
-    # print(targets)
+
     selector = SelectKBest(chi2, k=5)
     selector.fit(features, labels)
     support = selector.get_support(True)
@@ -47,6 +44,6 @@ for i in range(1):
     for s_index in support:
         seq_id = sequence_ids[s_index]
         feature_scaled = features_scaled[:, s_index]
-        Chart.showchart(sequence_ids[s_index], feature_scaled, targets_scaled, measurement_ids)
+        ChartUtils.showchart(sequence_ids[s_index], feature_scaled, targets_scaled, measurement_ids)
         # sos = enz_utils.sum_of_squares(feature_scaled, targets_scaled)
         print(sequence_ids[s_index], selector.scores_[s_index])

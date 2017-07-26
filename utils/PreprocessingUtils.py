@@ -29,8 +29,8 @@ def transpose_data(data):
 
 
 def extract_features(data):
-    measurements = sorted([x for x in data if x['measurement_point'].startswith("ROA_")], key=lambda k: k['measurement_point'])
-    sequence_ids = sorted([key for key in data[0] if key.startswith("roa_")])
+    measurements = sorted([x for x in data if x['measurement_point'].startswith("GBA_")], key=lambda k: k['measurement_point'])
+    sequence_ids = sorted([key for key in data[0] if key.startswith("gba_")])
     measurement_ids = [x['measurement_point'] for x in measurements]
 
     #  if "ROA_" in key
